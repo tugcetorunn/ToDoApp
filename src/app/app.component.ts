@@ -28,6 +28,8 @@ export class AppComponent {
   }
 
   getItems(){
-    return this.model.items;
+    // return this.model.items; // action false olanları göstermek için filtre ile itemleri çağırabiliriz.
+    return this.model.items.filter(item => !item.action) // (!) ile false ları kastetmiş oluyoruz. 
+    // sayfa refresh olduğunda kullanıcı tercihleri bir yerde tutulmadığı için uygulamadaki verilere göre sayfa geliyor.
   }
 }
