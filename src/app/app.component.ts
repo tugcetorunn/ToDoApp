@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Model } from './model';
+import { Model, ToDoItem } from './model';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +18,7 @@ export class AppComponent {
   // ] yukarıdaki değişkenleri direk component içinde yazmak yerine model içerisinde belirlemek daha doğru olur. (single responsibility)
 
   model = new Model();
+  isDisplayAll = false; // display check bilgisini tutacak.
 
   getNames(){
     return this.model.user; // nesne oluşturup da yapılabilir. bu şekilde daha kullanışlı 
@@ -27,9 +28,19 @@ export class AppComponent {
     return this.model.title;
   }
 
-  getItems(){
+  getItems(){ // display tuşunu aktif ettikten sonra buraya if tanımlamamız gerekiyor. burası display two way binding ine göre çalışacak.
+    if(this.isDisplayAll){
+      return this.model.items;
+    }
     // return this.model.items; // action false olanları göstermek için filtre ile itemleri çağırabiliriz.
     return this.model.items.filter(item => !item.action) // (!) ile false ları kastetmiş oluyoruz. 
     // sayfa refresh olduğunda kullanıcı tercihleri bir yerde tutulmadığı için uygulamadaki verilere göre sayfa geliyor.
+  }
+
+  addItem(value: string){
+    if(value != ""){ // "toDoItem" içindeki description a ulaşacağımız için bu class ı da import ediyoruz. 
+      this.model.items.push(new ToDoItem(value, false)); // eleman ekleme js te push()
+      // return ile işlemi yaptığımızda if dışında da return istediği için return süz bir şekilde işlemi yapıyoruz.
+    } 
   }
 }

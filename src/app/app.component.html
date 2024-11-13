@@ -7,10 +7,15 @@
       </h3>
 
       <div class="input-group">
-        <input type="text" class="form-control">
+        <input type="text" #toDoText class="form-control"> <!-- listeye ekleme yapmak için öncelikle bir id oluşturuyoruz. input ve butonu ilişkilendirmek için-->
         <div class="input-group-append">
-          <button class="btn btn-primary">Add</button>
+          <button class="btn btn-primary" (click)="addItem(toDoText.value); toDoText.value = '';">Add</button> <!-- button click olduğunda çalışan ng metodu (click) ile buttona basıldığında çalışacak olan metodu içerisine kaydediyoruz. bu metod todoText isimli inputun value sunu parametre olarak alacak ve metod çalışacak. ve işlem bittikten sonra todotext in value sunun değerini sıfırlıyoruz yeni ekleme yapılabilmesi için.-->
         </div>
+      </div>
+
+      <div class="custom-control custom-checkbox my-3"> <!-- tüm to do ların gözükmesi kullanıcıya bağlı olsun diye bir checkbox oluşturuyoruz tıklandığında yesler de nolar da gözükecek.-->
+        <input type="checkbox" class="custom-control-input" id="displayAll" [(ngModel)]="isDisplayAll"> <!-- çift yönlü binding olması gerekiyor ngModel kullanıyoruz. ve ilgili değişkene işaretli olup olmadığı durumunu atıyoruz. işaretli true, işaretsiz false.-->
+        <label for="displayAll" class="custom-control-label p-2">Display All</label>
       </div>
 
       <table class="table table-striped table-bordered">
